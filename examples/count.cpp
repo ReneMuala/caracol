@@ -9,12 +9,12 @@ int main() {
   /* clang-format off */
 
   int32_t insn[] = {
-      LOAD, 0, 0, 
-      LOAD, 1, end, 
-      PRINT, 0, 
-      INCR, 0, 
-     RJLE, 0, 1, -4, 
-     HALT,
+    LOAD, 0, 0, 
+    LOAD, 1, end, 
+    PRINT, 0, 
+    INCR, 0, 
+    RJLE, 0, 1, -4, 
+    HALT,
   };
   /* clang-format on */
   vm.set_pc(2);

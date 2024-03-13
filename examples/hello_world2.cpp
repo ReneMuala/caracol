@@ -7,10 +7,10 @@ int main() {
 
   /* clang-format off */
   int8_t data[] = {
-     LOAD,   3, 4 + 11, // LIMIT
-     LOAD,   0, 1,      
-     LOAD,   2, 4,
-     STOREP, 0, 2,  
+    LOAD,   3, 4 + 11, // LIMIT
+    LOAD,   0, 1,      
+    LOAD,   2, 4,
+    STOREP, 0, 2,  
     PRINTC, 1, 
     INCR, 2, 
     RJLT, 2, 3, -7,
