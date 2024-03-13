@@ -80,10 +80,11 @@ public:
    */
   inline void verify_sp_for_push(const int &size = sizeof(block_type)) {
     if ($SP < SP_LIMIT) {
-      std::cerr <<
-          "[stack overflow]:\n- descr: the process exceed the upper stack "
-          "limit, this means that there is no memory available to push (L = "
-          << SP_LIMIT << ")\nMachine registers:\n- $PC = "<< $PC << "\n- $SP = "<< $SP << "\n";
+      std::cerr
+          << "[stack overflow]:\n- descr: the process exceed the upper stack "
+             "limit, this means that there is no memory available to push (L = "
+          << SP_LIMIT << ")\nMachine registers:\n- $PC = " << $PC
+          << "\n- $SP = " << $SP << "\n";
       exit(EXIT_FAILURE);
     }
   }
@@ -96,10 +97,13 @@ public:
    */
   inline void verify_sp_for_pop(const int &size = sizeof(block_type)) {
     if ($SP >= memory_size) {
-      std::cerr <<
-          "[stack underflow]:\n- descr: the process exceed the lower stack "
-          "limit (L = "<< memory_size << "), this means that more pops than pushes where "
-          "done\nMachine registers:\n- $PC = "<< $PC << "\n- $SP = "<< $SP << "\n";
+      std::cerr
+          << "[stack underflow]:\n- descr: the process exceed the lower stack "
+             "limit (L = "
+          << memory_size
+          << "), this means that more pops than pushes where "
+             "done\nMachine registers:\n- $PC = "
+          << $PC << "\n- $SP = " << $SP << "\n";
       exit(EXIT_FAILURE);
     }
   }
@@ -114,9 +118,11 @@ public:
     if (addr >= 0 and addr < memory_size) {
       return &memory[addr * MODE];
     } else {
-      std::cerr << 
-          "[invalid address]:\n- descr: the process tried to access an invalid "
-          "memory address "<< addr <<"\nMachine registers:\n- $PC = "<< $PC << "\n- $SP = "<< $SP << "\n";
+      std::cerr << "[invalid address]:\n- descr: the process tried to access "
+                   "an invalid "
+                   "memory address "
+                << addr << "\nMachine registers:\n- $PC = " << $PC
+                << "\n- $SP = " << $SP << "\n";
       exit(EXIT_FAILURE);
     }
   }
@@ -225,57 +231,57 @@ public:
         break;
       case JLT:
         if (*memory_at(*memory_at($PC + 1)) < *memory_at(*memory_at($PC + 2)))
-          $PC = (*(char *)&*memory_at($PC + 3));
+          $PC = (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case JLE:
         if (*memory_at(*memory_at($PC + 1)) <= *memory_at(*memory_at($PC + 2)))
-          $PC = (*(char *)&*memory_at($PC + 3));
+          $PC = (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case JGE:
         if (*memory_at(*memory_at($PC + 1)) >= *memory_at(*memory_at($PC + 2)))
-          $PC = (*(char *)&*memory_at($PC + 3));
+          $PC = (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case JGT:
         if (*memory_at(*memory_at($PC + 1)) > *memory_at(*memory_at($PC + 2)))
-          $PC = (*(char *)&*memory_at($PC + 3));
+          $PC = (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case JMP:
-        $PC = (*(char *)&*memory_at($PC + 1));
+        $PC = (block_type)*memory_at($PC + 3);
         break;
       case RJLT:
         if (*memory_at(*memory_at($PC + 1)) < *memory_at(*memory_at($PC + 2)))
-          $PC += (signed char)*memory_at($PC + 3);
+          $PC += (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case RJLE:
         if (*memory_at(*memory_at($PC + 1)) <= *memory_at(*memory_at($PC + 2)))
-          $PC += (*(block_type *)&*memory_at($PC + 3));
+          $PC += (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case RJGE:
         if (*memory_at(*memory_at($PC + 1)) >= *memory_at(*memory_at($PC + 2)))
-          $PC += (*(block_type *)&*memory_at($PC + 3));
+          $PC += (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case RJGT:
         if (*memory_at(*memory_at($PC + 1)) > *memory_at(*memory_at($PC + 2)))
-          $PC += (*(block_type *)&*memory_at($PC + 3));
+          $PC += (block_type)*memory_at($PC + 3);
         else
           $PC += 4;
         break;
       case RJMP:
-        $PC += (*(block_type *)&*memory_at($PC + 1));
+        $PC += (block_type)*memory_at($PC + 3);
         break;
       case PRINTS:
         std::cout << "[" << int(*memory_at($PC + 1)) << "] "

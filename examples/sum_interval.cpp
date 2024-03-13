@@ -6,7 +6,7 @@ int main() {
   int32_t begin = 1;
   int32_t end = 100;
 
-  caracol::vm<int32_t, 16, int32_t> vm;
+  caracol::vm<int32_t, 24, int32_t> vm;
   /* clang-format off */
 
   int32_t data[] = {
@@ -22,6 +22,6 @@ int main() {
 
   /* clang-format on */
   vm.set_pc(3);
-  vm.write_block_array(2, data, sizeof(data) / sizeof(int32_t));
+  vm.write_block_array(3, data, sizeof(data) / sizeof(int32_t));
   vm.start();
 }
