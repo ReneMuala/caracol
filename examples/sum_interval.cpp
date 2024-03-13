@@ -10,15 +10,18 @@ int main() {
   /* clang-format off */
 
   int32_t data[] = {
-    LOAD, 0, begin, 
-    LOAD, 1, end, 
-    ADD, 0, 1, 
+    LOAD, 0, 0,
+    LOAD, 1, begin, 
+    LOAD, 2, end, 
+    ADD, 0, 1,
+    INCR, 1,
+    RJLE, 1, 2, -5,
     PRINT, 0, 
     HALT
   };
 
   /* clang-format on */
-  vm.set_pc(2);
+  vm.set_pc(3);
   vm.write_block_array(2, data, sizeof(data) / sizeof(int32_t));
   vm.start();
 }

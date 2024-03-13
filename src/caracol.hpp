@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstring>
-#include <format>
 #include <iostream>
 
 namespace caracol {
@@ -81,11 +80,10 @@ public:
    */
   inline void verify_sp_for_push(const int &size = sizeof(block_type)) {
     if ($SP < SP_LIMIT) {
-      std::cerr << std::format(
+      std::cerr <<
           "[stack overflow]:\n- descr: the process exceed the upper stack "
           "limit, this means that there is no memory available to push (L = "
-          "{})\nMachine registers:\n- $PC = {}\n- $SP = {}\n",
-          SP_LIMIT, $PC, $SP);
+          << SP_LIMIT << ")\nMachine registers:\n- $PC = "<< $PC << "\n- $SP = "<< $SP << "\n";
       exit(EXIT_FAILURE);
     }
   }
@@ -98,11 +96,10 @@ public:
    */
   inline void verify_sp_for_pop(const int &size = sizeof(block_type)) {
     if ($SP >= memory_size) {
-      std::cerr << std::format(
+      std::cerr <<
           "[stack underflow]:\n- descr: the process exceed the lower stack "
-          "limit (L = {}), this means that more pops than pushes where "
-          "done\nMachine registers:\n- $PC = {}\n- $SP = {}\n",
-          memory_size, $PC, $SP);
+          "limit (L = "<< memory_size << "), this means that more pops than pushes where "
+          "done\nMachine registers:\n- $PC = "<< $PC << "\n- $SP = "<< $SP << "\n";
       exit(EXIT_FAILURE);
     }
   }
@@ -117,10 +114,9 @@ public:
     if (addr >= 0 and addr < memory_size) {
       return &memory[addr * MODE];
     } else {
-      std::cerr << std::format(
+      std::cerr << 
           "[invalid address]:\n- descr: the process tried to access an invalid "
-          "memory address {}\nMachine registers:\n- $PC = {}\n- $SP = {}\n",
-          addr, $PC, $SP);
+          "memory address "<< addr <<"\nMachine registers:\n- $PC = "<< $PC << "\n- $SP = "<< $SP << "\n";
       exit(EXIT_FAILURE);
     }
   }
